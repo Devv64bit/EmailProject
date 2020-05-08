@@ -8,18 +8,25 @@ public class Email {
     private String password;
     private String department;
     private String altEmail;
-    private int mailboxCapacity;
+    private String email;
+    private int mailboxCapacity = 100;
+    private String companySuffix = "objective.com";
 
     public Email(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        System.out.println("Email created for : " + this.firstName + " " + this.lastName);
 
         this.department = setDepartment();
         System.out.println("Department is: " + this.department);
 
         this.password = generatePassword(10);
         System.out.println("Your password is: " + this.password);
+
+        email = firstName.toLowerCase() + "." + lastName.toLowerCase() + "@" + department.toLowerCase() + "."
+                + companySuffix;
+
+        System.out.println("Your email is: " + email);
+
     }
 
     private String setDepartment() {
@@ -45,15 +52,38 @@ public class Email {
     }
 
     private String generatePassword(int length) {
-        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*-=";
         SecureRandom random = new SecureRandom();
         StringBuilder builder = new StringBuilder();
 
         for (int x = 0; x < length; x++) {
             int randomIndex = random.nextInt(chars.length());
-            builder.append(randomIndex);
+            builder.append(chars.charAt(randomIndex));
         }
         return builder.toString();
     }
 
+    public void mailboxCap(int Capacity) {
+        this.mailboxCapacity = Capacity;
+    }
+
+    public void setAlternateEmail(String AlternateEmail) {
+        this.altEmail = AlternateEmail;
+    }
+
+    public void changePassword(String newPass) {
+        this.password = newPass;
+    }
+
+    public int getMailBoxCapacity() {
+        return mailboxCapacity;
+    }
+
+    public String getAlternateEmail() {
+        return altEmail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
